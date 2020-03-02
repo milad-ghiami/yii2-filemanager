@@ -231,12 +231,12 @@ class Mediafile extends ActiveRecord
         $counter = 0;
         do{
             if($counter==0)
-                $filename = Inflector::slug($this->file->baseName).'.'. $this->file->extension;
+                $filename = time().Inflector::slug($this->file->baseName).'.'. $this->file->extension;
             else{
                 //if we don't want to rename we finish the call here
                 if($rename == false)
                     return false;
-                $filename = Inflector::slug($this->file->baseName). $counter.'.'. $this->file->extension;
+                $filename =time(). Inflector::slug($this->file->baseName). $counter.'.'. $this->file->extension;
             }
             $url = "$structure/$filename";
             $counter++;
@@ -378,7 +378,7 @@ class Mediafile extends ActiveRecord
             $width = $size[0];
             $height = $size[1];
 
-            return "$dirname/" . $this->getThumbFilename($filename, $extension, Module::DEFAULT_THUMB_ALIAS, $width, $height);
+            return Yii::$app->controller->module->routes["tinymceUrl"]."$dirname/" . $this->getThumbFilename($filename, $extension, Module::DEFAULT_THUMB_ALIAS, $width, $height);
         }
         return "$baseUrl/images/file.png";
     }
@@ -476,14 +476,15 @@ class Mediafile extends ActiveRecord
      */
     public function getImagesList(Module $module)
     {
+
         $thumbs = $this->getThumbs();
         $list = [];
         $originalImageSize = $this->getOriginalImageSize($module->routes);
-        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
+        $list[Yii::$app->controller->module->routes["tinymceUrl"].$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
 
         foreach ($thumbs as $alias => $url) {
             $preset = $module->thumbs[$alias];
-            $list[$url] = $preset['name'] . ' ' . $preset['size'][0] . ' × ' . $preset['size'][1];
+            $list[Yii::$app->controller->module->routes["tinymceUrl"].$url] = $preset['name'] . ' ' . $preset['size'][0] . ' × ' . $preset['size'][1];
         }
         return $list;
     }

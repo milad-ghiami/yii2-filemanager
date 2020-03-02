@@ -58,12 +58,13 @@ Configuration:
         'class' => 'pendalf89\filemanager\Module',
         // Upload routes
         'routes' => [
-            // Base absolute path to web directory
-            'baseUrl' => '',
-            // Base web directory url
-            'basePath' => '@frontend/web',
-            // Path for uploaded files in web directory
-            'uploadPath' => 'uploads',
+  // Base absolute path to web directory
+                 'baseUrl' =>"filemanager",
+                 // Base web directory url
+                 'basePath' => '../upload',
+                 // Path for uploaded files in web directory
+                 'uploadPath' => 'test',
+                 'tinymceUrl'=>"http://example.com/upload/"
         ],
         // Thumbnails info
         'thumbs' => [

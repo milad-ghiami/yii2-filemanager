@@ -91,6 +91,7 @@ class FileController extends Controller
 	    }
 
         $model->saveUploadedFile($routes, $rename);
+
         $bundle = FilemanagerAsset::register($this->view);
 
         if ($model->isImage()) {
@@ -98,7 +99,7 @@ class FileController extends Controller
         }
 
         $response['files'][] = [
-            'url'           => $model->url,
+            'url'           => Yii::$app->controller->module->routes["tinymceUrl"].$model->url,
             'thumbnailUrl'  => $model->getDefaultThumbUrl($bundle->baseUrl),
             'name'          => $model->filename,
             'type'          => $model->type,
